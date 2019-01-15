@@ -8,7 +8,8 @@ export default {
         return {
             text: "abcdsf"
         }
-    }
+    },
+
 }
 </script>
 
