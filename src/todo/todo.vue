@@ -7,12 +7,28 @@
         placeholder = "What to do next?"
         @keyup.enter = "addTodo"
       >
-
+    <vItem :todo="todo"></vItem>
+    <vTabs :filter="filter"></vTabs>
     </section>
 </template>
 
 <script>
+import vItem from './item.vue'
+import vTabs from './tabs.vue'
 export default {
+  components: {
+    vItem, vTabs
+  },
+  data() {
+    return {
+      todo: {
+        id: 0,
+        content: 'this is todo',
+        completed: false,
+      },
+      filter: 'all'
+    }
+  },
   methods: {
     addTodo() {}
   }
