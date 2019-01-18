@@ -7,30 +7,44 @@
         placeholder = "What to do next?"
         @keyup.enter = "addTodo"
       >
-    <vItem :todo="todo"></vItem>
-    <vTabs :filter="filter"></vTabs>
+    <vItem 
+      :todo="todo"
+      v-for="todo in todos"
+      :key="todo.id"
+      @del="deleteTodo"
+    />
+    <vTabs :filter="filter" :todos="todos"></vTabs>
     </section>
 </template>
 
 <script>
 import vItem from './item.vue'
 import vTabs from './tabs.vue'
+let id = 0;
 export default {
   components: {
     vItem, vTabs
   },
   data() {
     return {
-      todo: {
-        id: 0,
-        content: 'this is todo',
-        completed: false,
-      },
+      todos: [],
       filter: 'all'
     }
   },
   methods: {
-    addTodo() {}
+    addTodo(e) {
+      this.todos.unshift({
+        id: id++,
+        content: e.target.value.trim(),
+        completed: false,
+      })
+      // clear field after each input
+      e.target.value = ""
+    },
+    deleteTodo(id) {
+      console.log("try delete index ", id)
+      this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1)
+    }
   }
 }
 </script>
