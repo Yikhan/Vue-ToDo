@@ -5,20 +5,20 @@
         <span
           v-for="state in states"
           :key="state"
-          :class="[state, filter === state ? 'active' : '']"
-          @click="toggleFilter(state)"
+          :class="[state, tabSelected === state ? 'selected' : '']"
+          @click="toggleTab(state)"
         >
           {{state}}
         </span>
     </span>
-    <span class="clear" @click="clearAllCompleted">Clear completed</span>
+    <span class="clear" @click="clearCompleted">Clear completed</span>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    filter: {
+    tabSelected: {
       type: String,
       required: true,
     },
@@ -38,8 +38,12 @@ export default {
     },
   },
   methods: {
-    clearAllCompleted() {},
-    toggleFilter() {},
+    clearCompleted() {
+      this.$emit('clearCompleted')
+    },
+    toggleTab(state) {
+      this.$emit('toggle', state)
+    },
     
   }
 }
@@ -74,9 +78,9 @@ export default {
     display inline-block
     padding 0 10px
     cursor pointer
-    border 1px solid rgba(175, 47, 47, 0)
-    &.active
-      border-color rgba(175, 47, 47, 0.4)
-      border-radius 5px
+    border 1px solid rgba(175, 47, 47, 0) 
+    &.selected
+      border-color rgba(175, 47, 47, 0.5)
+      border-radius 10px
 </style>
 

@@ -6,14 +6,19 @@
         autofocus = "autofocus"
         placeholder = "What to do next?"
         @keyup.enter = "addTodo"
-      >
+      />
     <vItem 
       :todo="todo"
-      v-for="todo in todos"
+      v-for="todo in filterTodos"
       :key="todo.id"
       @del="deleteTodo"
     />
-    <vTabs :filter="filter" :todos="todos"></vTabs>
+    <vTabs 
+      :tabSelected="tabSelected" 
+      :todos="todos"
+      @toggle="toggleTab"
+      @clearCompleted='clearCompleted'
+    />
     </section>
 </template>
 
@@ -28,7 +33,16 @@ export default {
   data() {
     return {
       todos: [],
-      filter: 'all'
+      tabSelected: 'all'
+    }
+  },
+  computed: {
+    filterTodos() {
+      if (this.tabSelected === 'all') {
+        return this.todos
+      }
+      const isSelectCompleted = this.tabSelected === 'completed'
+      return this.todos.filter(todo => todo.completed === isSelectCompleted)
     }
   },
   methods: {
@@ -44,7 +58,13 @@ export default {
     deleteTodo(id) {
       console.log("try delete index ", id)
       this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1)
-    }
+    },
+    toggleTab(state) {
+      this.tabSelected = state
+    },
+    clearCompleted() {
+      this.todos = this.todos.filter(todo => !todo.completed)
+    },
   }
 }
 </script>
