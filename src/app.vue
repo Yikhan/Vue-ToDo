@@ -35,7 +35,7 @@ export default {
         top 0
         bottom 0
         background-color #999 
-        opacity .6
+        opacity .1
         z-index -1
 </style>
 
